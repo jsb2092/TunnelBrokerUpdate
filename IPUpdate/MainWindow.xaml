@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:IPUpdate"
         mc:Ignorable="d"
         xmlns:tb="http://www.hardcodet.net/taskbar"
-        Title="TunnelBroker IP Updater" Height="230" Width="375">
+        ResizeMode="CanMinimize"
+        Title="TunnelBroker IP Updater" Height="230" Width="375" WindowState="Minimized" ShowInTaskbar="False">
    
     <Grid>
         

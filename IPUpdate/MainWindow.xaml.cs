@@ -25,6 +25,7 @@ namespace IPUpdate
         public MainWindow()
         {
             InitializeComponent();
+            createNotificaitonIcon();
             NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
             updateTimer = new DispatcherTimer {Interval = TimeSpan.FromMinutes(5)};
             updateTimer.Tick += (sender, args) =>
@@ -57,12 +58,18 @@ namespace IPUpdate
         private void IPChange()
         {
             var client = new WebClient();
-            var publicIP = client.DownloadString("http://whatismyip.akamai.com/");
-            if (Properties.Settings.Default.myPublicIP != publicIP)
+            try
             {
-                Properties.Settings.Default.myPublicIP = publicIP;
-                Properties.Settings.Default.Save();
-                updateIP();
+                var publicIP = client.DownloadString("http://whatismyip.akamai.com/");
+                if (Properties.Settings.Default.myPublicIP != publicIP)
+                {
+                    Properties.Settings.Default.myPublicIP = publicIP;
+                    Properties.Settings.Default.Save();
+                    updateIP();
+                }
+            }
+            catch
+            {
             }
         }
 
@@ -76,6 +83,11 @@ namespace IPUpdate
             if (this.WindowState == WindowState.Minimized)
             {
                 createNotificaitonIcon();
+                this.ShowInTaskbar = false;
+            }
+            else
+            {
+                this.ShowInTaskbar = true;
             }
 
 

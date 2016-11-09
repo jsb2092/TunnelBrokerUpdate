@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         ResizeMode="CanMinimize"
-        Title="TunnelBroker IP Updater" Height="230" Width="375" WindowState="Minimized" ShowInTaskbar="False">
+        Title="TunnelBroker IP Updater" Height="230" Width="375" Loaded="Window_Loaded">
    
     <Grid>
         

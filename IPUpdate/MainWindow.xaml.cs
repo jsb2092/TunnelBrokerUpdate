@@ -25,7 +25,7 @@ namespace IPUpdate
         public MainWindow()
         {
             InitializeComponent();
-            createNotificaitonIcon();
+
             NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
             updateTimer = new DispatcherTimer {Interval = TimeSpan.FromMinutes(5)};
             updateTimer.Tick += (sender, args) =>
@@ -52,7 +52,8 @@ namespace IPUpdate
             {
                 hostnameTextBox.Text = Properties.Settings.Default.hostname;
             }
- 
+
+
         }
 
         private void IPChange()
@@ -90,7 +91,7 @@ namespace IPUpdate
             if (this.WindowState == WindowState.Minimized)
             {
                 createNotificaitonIcon();
-                this.ShowInTaskbar = false;
+  
             }
             else
             {
@@ -102,6 +103,7 @@ namespace IPUpdate
 
         private void createNotificaitonIcon()
         {
+            // this is a hack to fix an issue that is likely related to build 14959 of win10
             nIcon?.Dispose();
             nIcon = new NotifyIcon
             {
@@ -114,6 +116,7 @@ namespace IPUpdate
                 this.WindowState = WindowState.Normal;
                 nIcon.Dispose();
             };
+            this.ShowInTaskbar = false;
         }
 
         public void showNotificaiton(string title, string message, ToolTipIcon icon)
@@ -240,6 +243,14 @@ namespace IPUpdate
         {
             Properties.Settings.Default.hostname = hostnameTextBox.Text;
             Properties.Settings.Default.Save();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Properties.Settings.Default.username != "")
+            {
+                WindowState = WindowState.Minimized;
+            }
         }
     }
 }

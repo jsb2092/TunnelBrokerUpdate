@@ -34,7 +34,7 @@ namespace IPUpdate
             };
             updateTimer.Start();
             this.StateChanged += OnStateChanged;
-
+            IPChange();
 
             if (Properties.Settings.Default.username != "")
             {
@@ -75,6 +75,13 @@ namespace IPUpdate
 
         private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
         {
+
+            var adapters = NetworkInterface.GetAllNetworkInterfaces();
+            foreach (var n in adapters)
+            {
+                Debug.WriteLine("   {0} is {1}", n.Name, n.OperationalStatus);
+            }
+            //Thread.Sleep(2000);
             Dispatcher.Invoke(IPChange);
         }
 
@@ -143,7 +150,7 @@ namespace IPUpdate
                 {
                     Debug.WriteLine("no change detected");
                     // uncomment for debugging
-                    showNotificaiton("Success", "No Change, this shouldn't be here", ToolTipIcon.Warning);
+                    //showNotificaiton("Success", "No Change, this shouldn't be here", ToolTipIcon.Warning);
 
                     
                 }
